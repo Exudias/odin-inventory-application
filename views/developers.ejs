@@ -4,5 +4,12 @@
 </head>
 <body>
     <h1>Developers</h1>
+    <div>
+        <ul>
+        <% for (let i = 0; i < developers.length; i++) { %>
+            <li><%= developers[i].name %></li>
+        <% } %>
+        </ul>
+    </div>
     <a href="/">Home</a>
 </body>

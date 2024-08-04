@@ -4,5 +4,12 @@
 </head>
 <body>
     <h1>Genres</h1>
+    <div>
+        <ul>
+        <% for (let i = 0; i < genres.length; i++) { %>
+            <li><%= genres[i].name %></li>
+        <% } %>
+        </ul>
+    </div>
     <a href="/">Home</a>
 </body>
