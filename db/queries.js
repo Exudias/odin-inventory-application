@@ -30,16 +30,19 @@ async function getDevAndGames(devId) {
     return rows;
 }
 
-async function getGameInfo(gameId) {
-    const queryDevs = `
-    SELECT DISTINCT d.name AS dev_name,
-    d.id AS dev_id
-    FROM developers AS d
-    JOIN games_developers AS gd ON d.id = gd.developer_id
-    WHERE gd.game_id = $1;
+async function getGameById(gameId) {
+    const query = `
+    SELECT *
+    FROM games
+    WHERE id = $1;
     `;
 
-    const queryGenres = `
+    const {rows} = await pool.query(query, [gameId]);
+    return rows[0];
+}
+
+async function getGenresByGameId(gameId) {
+    const query = `
     SELECT DISTINCT g.name AS genre_name,
     g.id AS genre_id
     FROM genres AS g
@@ -47,17 +50,21 @@ async function getGameInfo(gameId) {
     WHERE gg.game_id = $1;
     `;
 
-    const queryGame = `
-    SELECT *
-    FROM games
-    WHERE id = $1;
+    const {rows} = await pool.query(query, [gameId]);
+    return rows;
+}
+
+async function getDevelopersByGameId(gameId) {
+    const query = `
+    SELECT DISTINCT d.name AS dev_name,
+    d.id AS dev_id
+    FROM developers AS d
+    JOIN games_developers AS gd ON d.id = gd.developer_id
+    WHERE gd.game_id = $1;
     `;
 
-    const rowsDevs = (await pool.query(queryDevs, [gameId])).rows;
-    const rowsGenres = (await pool.query(queryGenres, [gameId])).rows;
-    const gameInfo = (await pool.query(queryGame, [gameId])).rows[0];
-
-    return {rowsDevs, rowsGenres, gameInfo};
+    const {rows} = await pool.query(query, [gameId]);
+    return rows;
 }
 
 module.exports = {
@@ -65,5 +72,7 @@ module.exports = {
     getAllDevelopers,
     getAllGenres,
     getDevAndGames,
-    getGameInfo,
+    getGameById,
+    getDevelopersByGameId,
+    getGenresByGameId,
 }

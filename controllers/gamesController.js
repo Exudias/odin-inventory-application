@@ -9,7 +9,10 @@ exports.gamesGet = asyncHandler(async (req, res) => {
 
 exports.gameInfoGet = asyncHandler(async (req, res) => {
     const gameId = req.params.id;
-    const {rowsDevs, rowsGenres, gameInfo} = await db.getGameInfo(gameId);
+
+    const rowsDevs = await db.getDevelopersByGameId(gameId);
+    const rowsGenres = await db.getGenresByGameId(gameId);
+    const gameInfo = await db.getGameById(gameId);
 
     res.render("gameInfo", { title: gameInfo.title, rowsDevs, rowsGenres, gameInfo });
 });
