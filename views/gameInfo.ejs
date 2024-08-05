@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<head>
+    <title><%= title %></title>
+</head>
+<body>
+    <h1><%= title %> (<%= gameInfo.release_date.getFullYear() %>)</h1>
+    <h1>Developers:</h1>
+    <div>
+        <ul>
+        <% for (let i = 0; i < rowsDevs.length; i++) { %>
+            <li><a href="/developers/<%= rowsDevs[i].dev_id %>"><%= rowsDevs[i].dev_name %></a></li>
+        <% } %>
+        </ul>
+    </div>
+    <h1>Genres:</h1>
+    <div>
+        <ul>
+        <% for (let i = 0; i < rowsGenres.length; i++) { %>
+            <li><%= rowsGenres[i].genre_name %></li>
+        <% } %>
+        </ul>
+    </div>
+    <a href="/">Home</a>
+</body>
