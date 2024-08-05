@@ -7,7 +7,9 @@
     <div>
         <ul>
         <% for (let i = 0; i < developers.length; i++) { %>
-            <li><%= developers[i].name %></li>
+            <li>
+                <a href="/developers/<%= developers[i].id %>"><%= developers[i].name %></a>
+            </li>
         <% } %>
         </ul>
     </div>

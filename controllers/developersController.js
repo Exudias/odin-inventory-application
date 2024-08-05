@@ -6,3 +6,15 @@ exports.developersGet = asyncHandler(async (req, res) => {
 
     res.render("developers", { title: "Developers", developers: allDevelopers });
 });
+
+exports.developerAndGamesGet = asyncHandler(async (req, res) => {
+    const devId = req.params.id;
+    const devAndGames = await db.getDevAndGames(devId);
+
+    const devName = devAndGames[0].name;
+    const games = devAndGames.map((row) => {return {title: row.title, release_date: row.release_date}});
+
+    console.log(games);
+
+    res.render("devGames", { title: `${devName}'s Games` , devName, games });
+});

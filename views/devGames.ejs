@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<head>
+    <title><%= title %></title>
+</head>
+<body>
+    <h1>Developer: <%= devName %></h1>
+    <h1>Games:</h1>
+    <div>
+        <ul>
+        <% for (let i = 0; i < games.length; i++) { %>
+            <li><%= games[i].title %> - <%= games[i].release_date.toLocaleDateString('en-GB') %></li>
+        <% } %>
+        </ul>
+    </div>
+    <a href="/">Home</a>
+</body>
