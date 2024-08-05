@@ -9,10 +9,23 @@ exports.developersGet = asyncHandler(async (req, res) => {
 
 exports.developerAndGamesGet = asyncHandler(async (req, res) => {
     const devId = req.params.id;
-    const devAndGames = await db.getDevAndGames(devId);
 
-    const devName = devAndGames[0].name;
-    const games = devAndGames.map((row) => {return {title: row.title, release_date: row.release_date, id: row.id}});
+    const dev = await db.getDevById(devId);
+    const games = await db.getGamesByDevId(devId);
+
+    const devName = dev.name;
 
     res.render("devGames", { title: `${devName}'s Games` , devName, games });
+});
+
+exports.developerNewGet = asyncHandler(async (req, res) => {
+    const allGames = await db.getAllGames();
+
+    res.render("devNew", { title: "Create a developer", allGames });
+});
+
+exports.developerNewPost = asyncHandler(async (req,res) => {
+    await db.addDeveloper(req.body.name);
+
+    res.redirect("/developers");
 });
