@@ -16,3 +16,13 @@ exports.genreAndGamesGet = asyncHandler(async (req, res) => {
 
     res.render("genreGames", { title: `${genreName} Games` , genreName, games });
 });
+
+exports.genreNewGet = asyncHandler(async (req, res) => {
+    res.render("genreNew", { title: "Create a genre" });
+});
+
+exports.genreNewPost = asyncHandler(async (req,res) => {
+    await db.addGenre(req.body.name);
+
+    res.redirect("/genres");
+});
