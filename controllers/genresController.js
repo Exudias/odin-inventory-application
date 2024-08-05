@@ -12,10 +12,11 @@ exports.genreAndGamesGet = asyncHandler(async (req, res) => {
 
     const genre = await db.getGenreById(genreId);
     const games = await db.getGamesByGenreId(genreId);
+    const allNonGenreGames = await db.getGamesNotByGenreId(genreId);
 
     const genreName = genre.name;
 
-    res.render("genreGames", { title: `${genreName} Games` , genreName, games });
+    res.render("genreGames", { title: `${genreName} Games` , genreName, games, id: genreId, nonGames: allNonGenreGames });
 });
 
 exports.genreNewGet = asyncHandler(async (req, res) => {
@@ -26,4 +27,13 @@ exports.genreNewPost = asyncHandler(async (req,res) => {
     await db.addGenre(req.body.name);
 
     res.redirect("/genres");
+});
+
+exports.genreLinkGamePost = asyncHandler(async (req,res) => {
+    const genreId = req.params.id;
+    const gameId = req.body.game_id;
+
+    await db.linkGenreToGame(gameId, genreId);
+
+    res.redirect("/genres/" + genreId);
 });

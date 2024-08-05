@@ -31,11 +31,29 @@ async function getGamesNotByDevId(devId) {
     const query = `
     SELECT DISTINCT g.title, g.release_date, g.id
     FROM games AS g
-    LEFT JOIN games_developers gd ON g.id = gd.game_id
-    WHERE gd.developer_id IS NULL OR gd.developer_id != $1;
+    WHERE g.id NOT IN (
+        SELECT gd.game_id
+        FROM games_developers AS gd
+        WHERE gd.developer_id = $1
+    );
     `;
 
     const { rows } = await pool.query(query, [devId]);
+    return rows;
+}
+
+async function getGamesNotByGenreId(genreId) {
+    const query = `
+    SELECT DISTINCT g.title, g.release_date, g.id
+    FROM games AS g
+    WHERE g.id NOT IN (
+        SELECT gg.game_id
+        FROM games_genres AS gg
+        WHERE gg.genre_id = $1
+    );
+    `;
+
+    const { rows } = await pool.query(query, [genreId]);
     return rows;
 }
 
@@ -163,12 +181,22 @@ async function linkDeveloperToGame(devId, gameId) {
     await pool.query(query, [gameId, devId]);
 }
 
+async function linkGenreToGame(gameId, genreId) {
+    const query = `
+    INSERT INTO games_genres (game_id, genre_id)
+    VALUES ($1, $2);
+    `;
+
+    await pool.query(query, [gameId, genreId]);
+}
+
 module.exports = {
     getAllGames,
     getAllDevelopers,
     getAllGenres,
     getGamesByDevId,
     getGamesNotByDevId,
+    getGamesNotByGenreId,
     getGamesByGenreId,
     getGameById,
     getDevelopersByGameId,
@@ -180,4 +208,5 @@ module.exports = {
     addGame,
     addGenre,
     linkDeveloperToGame,
+    linkGenreToGame,
 }

@@ -11,4 +11,15 @@
         <% } %>
         </ul>
     </div>
+    <% if (nonGames.length > 0) { %>
+        <h1>Add a game to list of <%= genreName %> games:</h1>
+        <form action="/genres/<%= id %>/newGame" method="POST">
+            <select name="game_id">
+                <% for (let i = 0; i < nonGames.length; i++) { %>
+                    <option value="<%= nonGames[i].id %>"><%= nonGames[i].title %> (<%= nonGames[i].release_date.getFullYear() %>)</option>
+                <% } %>
+            </select>
+            <button type="submit">Submit</button>
+        </form>
+        <% } %>
 </body>
