@@ -39,6 +39,8 @@ nav {
     gap: 16px;
 
     background-color: var(--color-950);
+
+    margin-bottom: 32px;
 }
 
 nav a {
@@ -48,6 +50,8 @@ nav a {
 
     color: var(--color-50);
     text-decoration: none;
+
+    transition: color 0.1s;
 }
 
 nav a:active {
@@ -75,3 +79,6 @@ nav a:hover::after {
     transform: scaleX(1);
 }
 
+nav a:active::after {
+    background-color: var(--color-300);
+}
