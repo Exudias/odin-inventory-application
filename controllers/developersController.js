@@ -12,10 +12,11 @@ exports.developerAndGamesGet = asyncHandler(async (req, res) => {
 
     const dev = await db.getDevById(devId);
     const games = await db.getGamesByDevId(devId);
+    const allNonDevGames = await db.getGamesNotByDevId(devId);
 
     const devName = dev.name;
 
-    res.render("devGames", { title: `${devName}'s Games` , devName, games });
+    res.render("devGames", { title: `${devName}'s Games` , devName, games, id: devId, nonGames: allNonDevGames });
 });
 
 exports.developerNewGet = asyncHandler(async (req, res) => {
@@ -26,4 +27,13 @@ exports.developerNewPost = asyncHandler(async (req,res) => {
     await db.addDeveloper(req.body.name);
 
     res.redirect("/developers");
+});
+
+exports.developerLinkGamePost = asyncHandler(async (req,res) => {
+    const devId = req.params.id;
+    const gameId = req.body.game_id;
+
+    await db.linkDeveloperToGame(devId, gameId);
+
+    res.redirect("/developers/" + devId);
 });

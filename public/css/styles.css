@@ -108,7 +108,7 @@ button:active {
     transform: scale(0.95);
 }
 
-input {
+input, select {
     padding: 4px;
 
     background-color: var(--color-950);
