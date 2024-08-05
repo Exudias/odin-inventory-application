@@ -107,3 +107,13 @@ button:hover {
 button:active {
     transform: scale(0.95);
 }
+
+input {
+    padding: 4px;
+
+    background-color: var(--color-950);
+    color: var(--color-200);
+
+    border: none;
+    border-radius: 16px;
+}

@@ -100,6 +100,15 @@ async function addDeveloper(name) {
     await pool.query(query, [name]);
 }
 
+async function addGame(title, releaseDate) {
+    const query = `
+    INSERT INTO games (title, release_date)
+    VALUES ($1, $2);
+    `;
+
+    await pool.query(query, [title, releaseDate]);
+}
+
 module.exports = {
     getAllGames,
     getAllDevelopers,
@@ -111,4 +120,5 @@ module.exports = {
     getGenreAndGames,
     addDeveloper,
     getDevById,
+    addGame,
 }

@@ -16,3 +16,13 @@ exports.gameInfoGet = asyncHandler(async (req, res) => {
 
     res.render("gameInfo", { title: gameInfo.title, rowsDevs, rowsGenres, gameInfo });
 });
+
+exports.gameNewGet = asyncHandler(async (req, res) => {
+    res.render("gameNew", { title: "Create a game" });
+});
+
+exports.gameNewPost = asyncHandler(async (req,res) => {
+    await db.addGame(req.body.title, req.body.release_date);
+
+    res.redirect("/games");
+});

@@ -19,9 +19,7 @@ exports.developerAndGamesGet = asyncHandler(async (req, res) => {
 });
 
 exports.developerNewGet = asyncHandler(async (req, res) => {
-    const allGames = await db.getAllGames();
-
-    res.render("devNew", { title: "Create a developer", allGames });
+    res.render("devNew", { title: "Create a developer" });
 });
 
 exports.developerNewPost = asyncHandler(async (req,res) => {
