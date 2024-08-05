@@ -7,7 +7,7 @@
     <div>
         <ul>
         <% for (let i = 0; i < genres.length; i++) { %>
-            <li><%= genres[i].name %></li>
+            <li><a href="/genres/<%= genres[i].id %>"><%= genres[i].name %></a></li>
         <% } %>
         </ul>
     </div>

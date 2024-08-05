@@ -16,7 +16,7 @@
     <div>
         <ul>
         <% for (let i = 0; i < rowsGenres.length; i++) { %>
-            <li><%= rowsGenres[i].genre_name %></li>
+            <li><a href="/genres/<%= rowsGenres[i].genre_id %>"><%= rowsGenres[i].genre_name %></a></li>
         <% } %>
         </ul>
     </div>
