@@ -117,3 +117,10 @@ input {
     border: none;
     border-radius: 16px;
 }
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+}

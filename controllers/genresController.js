@@ -9,10 +9,11 @@ exports.genresGet = asyncHandler(async (req, res) => {
 
 exports.genreAndGamesGet = asyncHandler(async (req, res) => {
     const genreId = req.params.id;
-    const genreAndGames = await db.getGenreAndGames(genreId);
 
-    const genreName = genreAndGames[0].name;
-    const games = genreAndGames.map((row) => {return {title: row.title, release_date: row.release_date, id: row.id}});
+    const genre = await db.getGenreById(genreId);
+    const games = await db.getGamesByGenreId(genreId);
+
+    const genreName = genre.name;
 
     res.render("genreGames", { title: `${genreName} Games` , genreName, games });
 });

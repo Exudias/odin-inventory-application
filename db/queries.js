@@ -27,6 +27,18 @@ async function getGamesByDevId(devId) {
     return rows;
 }
 
+async function getGamesByGenreId(genreId) {
+    const query = `
+    SELECT DISTINCT title, release_date, g.id
+    FROM games AS g
+    JOIN games_genres ON g.id = game_id
+    WHERE genre_id = $1;
+    `;
+
+    const { rows } = await pool.query(query, [genreId]);
+    return rows;
+}
+
 async function getGameById(gameId) {
     const query = `
     SELECT *
@@ -47,6 +59,18 @@ async function getDevById(devId)
     `;
 
     const {rows} = await pool.query(query, [devId]);
+    return rows[0];
+}
+
+async function getGenreById(genreId)
+{
+    const query = `
+    SELECT *
+    FROM genres
+    WHERE id = $1;
+    `;
+
+    const {rows} = await pool.query(query, [genreId]);
     return rows[0];
 }
 
@@ -123,12 +147,14 @@ module.exports = {
     getAllDevelopers,
     getAllGenres,
     getGamesByDevId,
+    getGamesByGenreId,
     getGameById,
     getDevelopersByGameId,
     getGenresByGameId,
     getGenreAndGames,
     addDeveloper,
     getDevById,
+    getGenreById,
     addGame,
     addGenre,
 }
