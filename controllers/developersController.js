@@ -41,8 +41,6 @@ exports.developerLinkGamePost = asyncHandler(async (req,res) => {
 exports.developerDelete = asyncHandler(async (req,res) => {
     const devId = req.params.id;
 
-    console.log("WE BE HERE");
-
     await db.deleteDeveloper(devId);
 
     res.redirect("/developers/");
