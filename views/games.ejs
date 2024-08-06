@@ -1,20 +1,18 @@
-<!DOCTYPE html>
-<head>
-    <title><%= title %></title>
-</head>
-<body>
-    <h1>Games (<%= games.length %>)</h1>
+<div class="basic-view">
+    <div class="basic-view-header">
+        <h1>Games (<%= games.length %>)</h1>
+        <a href="/games/new"><button class="add-button">+</button></a>
+    </div>
     <div>
         <ul>
         <% for (let i = 0; i < games.length; i++) { %>
             <li>
                 <a href="/games/<%= games[i].id %>"><%= games[i].title %> (<%= games[i].release_date.getFullYear() %>)</a>
                 <form action="/games/<%= games[i].id %>?_method=DELETE" method="POST">
-                    <button type="submit">X</button>
+                    <button type="submit" class="close-button">X</button>
                 </form>
             </li>
         <% } %>
         </ul>
     </div>
-    <a href="/games/new"><button>+</button></a>
-</body>
+</div>

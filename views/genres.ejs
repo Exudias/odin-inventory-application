@@ -1,20 +1,18 @@
-<!DOCTYPE html>
-<head>
-    <title><%= title %></title>
-</head>
-<body>
-    <h1>Genres (<%= genres.length %>)</h1>
+<div class="basic-view">
+    <div class="basic-view-header">
+        <h1>Genres (<%= genres.length %>)</h1>
+        <a href="/genres/new"><button class="add-button">+</button></a>
+    </div>
     <div>
         <ul>
         <% for (let i = 0; i < genres.length; i++) { %>
             <li>
                 <a href="/genres/<%= genres[i].id %>"><%= genres[i].name %></a>
                 <form action="/genres/<%= genres[i].id %>?_method=DELETE" method="POST">
-                    <button type="submit">X</button>
+                    <button type="submit" class="close-button">X</button>
                 </form>
             </li>
         <% } %>
         </ul>
     </div>
-    <a href="/genres/new"><button>+</button></a>
-</body>
+</div>

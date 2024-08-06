@@ -118,9 +118,80 @@ input, select {
     border-radius: 16px;
 }
 
+select:focus {
+    border-radius: 16px 16px 0 0;
+}
+
 form {
     display: flex;
     flex-direction: column;
     gap: 4px;
     align-items: center;
+}
+
+ul {
+    margin-top: 4px;
+}
+
+li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    font-size: 1.5rem;
+
+    gap: 8px;
+}
+
+.close-button, .add-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+    margin: 0;
+
+    width: 24px;
+    height: 24px;
+
+    font-size: 1rem;
+    line-height: 1;
+
+    border-radius: 50%;
+
+    text-transform: none;
+}
+
+.close-button:hover {
+    background-color: red;
+}
+
+.add-button {
+    margin-top: 8px;
+
+    width: 32px;
+    height: 32px;
+
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.add-button:hover {
+    background-color: green;
+}
+
+.basic-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    width: 100%;
+
+    padding: 0 32px 0 32px;
+}
+
+.basic-view-header {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
 }
