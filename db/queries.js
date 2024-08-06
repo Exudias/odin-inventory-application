@@ -57,6 +57,36 @@ async function getGamesNotByGenreId(genreId) {
     return rows;
 }
 
+async function getDevsNotWithGameId(gameId) {
+    const query = `
+    SELECT DISTINCT d.name, d.id
+    FROM developers AS d
+    WHERE d.id NOT IN (
+        SELECT gd.developer_id
+        FROM games_developers AS gd
+        WHERE gd.game_id = $1
+    );
+    `;
+
+    const { rows } = await pool.query(query, [gameId]);
+    return rows;
+}
+
+async function getGenresNotWithGameId(gameId) {
+    const query = `
+    SELECT DISTINCT g.name, g.id
+    FROM genres AS g
+    WHERE g.id NOT IN (
+        SELECT gg.genre_id
+        FROM games_genres AS gg
+        WHERE gg.game_id = $1
+    );
+    `;
+
+    const { rows } = await pool.query(query, [gameId]);
+    return rows;
+}
+
 async function getGamesByGenreId(genreId) {
     const query = `
     SELECT DISTINCT title, release_date, g.id
@@ -209,4 +239,6 @@ module.exports = {
     addGenre,
     linkDeveloperToGame,
     linkGenreToGame,
+    getDevsNotWithGameId,
+    getGenresNotWithGameId,
 }

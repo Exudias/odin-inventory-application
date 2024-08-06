@@ -7,5 +7,7 @@ gamesRouter.get("/", gamesController.gamesGet);
 gamesRouter.get("/new", gamesController.gameNewGet);
 gamesRouter.post("/new", gamesController.gameNewPost);
 gamesRouter.get("/:id", gamesController.gameInfoGet);
+gamesRouter.post("/:id/newDeveloper", gamesController.gameLinkDeveloperPost);
+gamesRouter.post("/:id/newGenre", gamesController.gameLinkGenrePost);
 
 module.exports = gamesRouter;

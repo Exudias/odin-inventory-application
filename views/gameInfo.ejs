@@ -11,6 +11,16 @@
             <li><a href="/developers/<%= rowsDevs[i].dev_id %>"><%= rowsDevs[i].dev_name %></a></li>
         <% } %>
         </ul>
+        <% if (nonDevs.length > 0) { %>
+        <form action="/games/<%= gameInfo.id %>/newDeveloper" method="POST">
+            <select name="developer_id">
+                <% for (let i = 0; i < nonDevs.length; i++) { %>
+                    <option value="<%= nonDevs[i].id %>"><%= nonDevs[i].name %></option>
+                <% } %>
+            </select>
+            <button type="submit">+</button>
+        </form>
+        <% } %>
     </div>
     <h1>Genres:</h1>
     <div>
@@ -19,5 +29,15 @@
             <li><a href="/genres/<%= rowsGenres[i].genre_id %>"><%= rowsGenres[i].genre_name %></a></li>
         <% } %>
         </ul>
+        <% if (nonGenres.length > 0) { %>
+        <form action="/games/<%= gameInfo.id %>/newGenre" method="POST">
+            <select name="genre_id">
+                <% for (let i = 0; i < nonGenres.length; i++) { %>
+                    <option value="<%= nonGenres[i].id %>"><%= nonGenres[i].name %></option>
+                <% } %>
+            </select>
+            <button type="submit">+</button>
+        </form>
+        <% } %>
     </div>
 </body>

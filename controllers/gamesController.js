@@ -14,7 +14,10 @@ exports.gameInfoGet = asyncHandler(async (req, res) => {
     const rowsGenres = await db.getGenresByGameId(gameId);
     const gameInfo = await db.getGameById(gameId);
 
-    res.render("gameInfo", { title: gameInfo.title, rowsDevs, rowsGenres, gameInfo });
+    const allNonGameDevs = await db.getDevsNotWithGameId(gameId);
+    const allNonGameGenres = await db.getGenresNotWithGameId(gameId);
+
+    res.render("gameInfo", { title: gameInfo.title, rowsDevs, rowsGenres, gameInfo, nonDevs: allNonGameDevs, nonGenres: allNonGameGenres });
 });
 
 exports.gameNewGet = asyncHandler(async (req, res) => {
@@ -25,4 +28,22 @@ exports.gameNewPost = asyncHandler(async (req,res) => {
     await db.addGame(req.body.title, req.body.release_date);
 
     res.redirect("/games");
+});
+
+exports.gameLinkDeveloperPost = asyncHandler(async (req,res) => {
+    const gameId = req.params.id;
+    const devId = req.body.developer_id;
+
+    await db.linkDeveloperToGame(devId, gameId);
+
+    res.redirect("/games/" + gameId);
+});
+
+exports.gameLinkGenrePost = asyncHandler(async (req,res) => {
+    const gameId = req.params.id;
+    const genreId = req.body.genre_id;
+
+    await db.linkGenreToGame(gameId, genreId);
+
+    res.redirect("/games/" + gameId);
 });
