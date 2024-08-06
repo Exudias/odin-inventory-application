@@ -220,6 +220,21 @@ async function linkGenreToGame(gameId, genreId) {
     await pool.query(query, [gameId, genreId]);
 }
 
+async function deleteDeveloper(devId) {
+    const query = `
+    DELETE FROM developers
+    WHERE id = $1;
+    `;
+
+    const queryUnlink = `
+    DELETE FROM games_developers
+    WHERE developer_id = $1;
+    `;
+
+    await pool.query(queryUnlink, [devId]);
+    await pool.query(query, [devId]);
+}
+
 module.exports = {
     getAllGames,
     getAllDevelopers,
@@ -241,4 +256,5 @@ module.exports = {
     linkGenreToGame,
     getDevsNotWithGameId,
     getGenresNotWithGameId,
+    deleteDeveloper,
 }

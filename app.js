@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const path = require("node:path");
 const expressLayouts = require('express-ejs-layouts');
+const methodOverride = require('method-override');
 
 const indexRouter = require("./routes/indexRouter");
 const developersRouter = require("./routes/developersRouter");
@@ -18,6 +19,8 @@ app.use((req, res, next) => {
     res.locals.cssFile = null;
     next();
 });
+
+app.use(methodOverride('_method'));
 
 app.use("/genres", genresRouter);
 app.use("/games", gamesRouter);
