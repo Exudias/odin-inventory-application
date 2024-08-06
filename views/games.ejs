@@ -7,7 +7,12 @@
     <div>
         <ul>
         <% for (let i = 0; i < games.length; i++) { %>
-            <li><a href="/games/<%= games[i].id %>"><%= games[i].title %> (<%= games[i].release_date.getFullYear() %>)</a></li>
+            <li>
+                <a href="/games/<%= games[i].id %>"><%= games[i].title %> (<%= games[i].release_date.getFullYear() %>)</a>
+                <form action="/games/<%= games[i].id %>?_method=DELETE" method="POST">
+                    <button type="submit">X</button>
+                </form>
+            </li>
         <% } %>
         </ul>
     </div>

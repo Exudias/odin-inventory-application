@@ -47,3 +47,11 @@ exports.gameLinkGenrePost = asyncHandler(async (req,res) => {
 
     res.redirect("/games/" + gameId);
 });
+
+exports.gameDelete = asyncHandler(async (req,res) => {
+    const gameId = req.params.id;
+
+    await db.deleteGame(gameId);
+
+    res.redirect("/games/");
+});

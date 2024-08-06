@@ -37,3 +37,11 @@ exports.genreLinkGamePost = asyncHandler(async (req,res) => {
 
     res.redirect("/genres/" + genreId);
 });
+
+exports.genreDelete = asyncHandler(async (req,res) => {
+    const genreId = req.params.id;
+
+    await db.deleteGenre(genreId);
+
+    res.redirect("/genres/");
+});

@@ -8,5 +8,6 @@ genresRouter.get("/new", genresController.genreNewGet);
 genresRouter.post("/new", genresController.genreNewPost);
 genresRouter.get("/:id", genresController.genreAndGamesGet);
 genresRouter.post("/:id/newGame", genresController.genreLinkGamePost);
+genresRouter.delete("/:id", genresController.genreDelete);
 
 module.exports = genresRouter;
