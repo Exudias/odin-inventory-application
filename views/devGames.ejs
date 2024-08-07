@@ -5,7 +5,12 @@
     <div>
         <ul>
         <% for (let i = 0; i < games.length; i++) { %>
-            <li><a href="/games/<%= games[i].id%>"><%= games[i].title %> (<%= games[i].release_date.getFullYear() %>)</a></li>
+            <li>
+                <a href="/games/<%= games[i].id%>"><%= games[i].title %> (<%= games[i].release_date.getFullYear() %>)</a>
+                <form action="/games/<%= games[i].id %>/unlink?_method=DELETE&dev_id=<%= id %>" method="POST">
+                    <button type="submit" class="close-button">X</button>
+                </form>
+            </li>
         <% } %>
         </ul>
         <% if (games.length == 0) { %>

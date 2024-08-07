@@ -6,7 +6,12 @@
         <h1>Developers:</h1>
         <ul>
         <% for (let i = 0; i < rowsDevs.length; i++) { %>
-            <li><a href="/developers/<%= rowsDevs[i].dev_id %>"><%= rowsDevs[i].dev_name %></a></li>
+            <li>
+                <a href="/developers/<%= rowsDevs[i].dev_id %>"><%= rowsDevs[i].dev_name %></a>
+                <form action="/games/<%= gameInfo.id %>/unlink?_method=DELETE&dev_id=<%= rowsDevs[i].dev_id %>" method="POST">
+                    <button type="submit" class="close-button">X</button>
+                </form>
+            </li>
         <% } %>
         </ul>
         <% if (rowsDevs.length == 0) { %>
@@ -27,7 +32,12 @@
         <h1>Genres:</h1>
         <ul>
         <% for (let i = 0; i < rowsGenres.length; i++) { %>
-            <li><a href="/genres/<%= rowsGenres[i].genre_id %>"><%= rowsGenres[i].genre_name %></a></li>
+            <li>
+                <a href="/genres/<%= rowsGenres[i].genre_id %>"><%= rowsGenres[i].genre_name %></a>
+                <form action="/games/<%= gameInfo.id %>/unlink?_method=DELETE&genre_id=<%= rowsGenres[i].genre_id %>" method="POST">
+                    <button type="submit" class="close-button">X</button>
+                </form>
+            </li>
         <% } %>
         </ul>
         <% if (rowsGenres.length == 0) { %>

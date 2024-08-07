@@ -55,3 +55,23 @@ exports.gameDelete = asyncHandler(async (req,res) => {
 
     res.redirect("/games/");
 });
+
+exports.gameUnlink = asyncHandler(async (req, res) => {
+    const gameId = req.params.id;
+
+    const devId = req.query.dev_id;
+    const genreId = req.query.genre_id;
+
+    if (devId >= 0)
+    {
+        await db.unlinkGameDeveloper(gameId, devId);
+    }
+
+    if (genreId >= 0)
+    {
+        await db.unlinkGameGenre(gameId, genreId);
+    }
+
+    const referer = req.get('Referer');
+    res.redirect(referer || '/');
+});

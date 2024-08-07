@@ -271,6 +271,26 @@ async function deleteGame(gameId) {
     await pool.query(query, [gameId]);
 }
 
+async function unlinkGameGenre(gameId, genreId) {
+    const query = `
+    DELETE FROM games_genres
+    WHERE game_id = $1
+    AND genre_id = $2;
+    `;
+
+    await pool.query(query, [gameId, genreId]);
+}
+
+async function unlinkGameDeveloper(gameId, devId) {
+    const query = `
+    DELETE FROM games_developers
+    WHERE game_id = $1
+    AND developer_id = $2;
+    `;
+
+    await pool.query(query, [gameId, devId]);
+}
+
 module.exports = {
     getAllGames,
     getAllDevelopers,
@@ -295,4 +315,6 @@ module.exports = {
     deleteDeveloper,
     deleteGenre,
     deleteGame,
+    unlinkGameGenre,
+    unlinkGameDeveloper,
 }
