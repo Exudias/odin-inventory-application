@@ -1,38 +1,47 @@
-
-<h1><%= title %> (<%= gameInfo.release_date.getFullYear() %>)</h1>
-<h1>Developers:</h1>
-<div>
-    <ul>
-    <% for (let i = 0; i < rowsDevs.length; i++) { %>
-        <li><a href="/developers/<%= rowsDevs[i].dev_id %>"><%= rowsDevs[i].dev_name %></a></li>
-    <% } %>
-    </ul>
-    <% if (nonDevs.length > 0) { %>
-    <form action="/games/<%= gameInfo.id %>/newDeveloper" method="POST">
-        <select name="developer_id">
-            <% for (let i = 0; i < nonDevs.length; i++) { %>
-                <option value="<%= nonDevs[i].id %>"><%= nonDevs[i].name %></option>
-            <% } %>
-        </select>
-        <button type="submit" class="add-button">+</button>
-    </form>
-    <% } %>
-</div>
-<h1>Genres:</h1>
-<div>
-    <ul>
-    <% for (let i = 0; i < rowsGenres.length; i++) { %>
-        <li><a href="/genres/<%= rowsGenres[i].genre_id %>"><%= rowsGenres[i].genre_name %></a></li>
-    <% } %>
-    </ul>
-    <% if (nonGenres.length > 0) { %>
-    <form action="/games/<%= gameInfo.id %>/newGenre" method="POST">
-        <select name="genre_id">
-            <% for (let i = 0; i < nonGenres.length; i++) { %>
-                <option value="<%= nonGenres[i].id %>"><%= nonGenres[i].name %></option>
-            <% } %>
-        </select>
-        <button type="submit" class="add-button">+</button>
-    </form>
-    <% } %>
+<div class="form-view">
+    <div>
+        <h1><%= title %> (<%= gameInfo.release_date.getFullYear() %>)</h1>
+    </div>
+    <div>
+        <h1>Developers:</h1>
+        <ul>
+        <% for (let i = 0; i < rowsDevs.length; i++) { %>
+            <li><a href="/developers/<%= rowsDevs[i].dev_id %>"><%= rowsDevs[i].dev_name %></a></li>
+        <% } %>
+        </ul>
+        <% if (rowsDevs.length == 0) { %>
+            <h2>No developers listed!</h2>
+        <% } %>
+        <% if (nonDevs.length > 0) { %>
+        <form action="/games/<%= gameInfo.id %>/newDeveloper" method="POST">
+            <select name="developer_id">
+                <% for (let i = 0; i < nonDevs.length; i++) { %>
+                    <option value="<%= nonDevs[i].id %>"><%= nonDevs[i].name %></option>
+                <% } %>
+            </select>
+            <button type="submit" class="add-button">+</button>
+        </form>
+        <% } %>
+    </div>
+    <div>
+        <h1>Genres:</h1>
+        <ul>
+        <% for (let i = 0; i < rowsGenres.length; i++) { %>
+            <li><a href="/genres/<%= rowsGenres[i].genre_id %>"><%= rowsGenres[i].genre_name %></a></li>
+        <% } %>
+        </ul>
+        <% if (rowsGenres.length == 0) { %>
+            <h2>No genres listed!</h2>
+        <% } %>
+        <% if (nonGenres.length > 0) { %>
+        <form action="/games/<%= gameInfo.id %>/newGenre" method="POST">
+            <select name="genre_id">
+                <% for (let i = 0; i < nonGenres.length; i++) { %>
+                    <option value="<%= nonGenres[i].id %>"><%= nonGenres[i].name %></option>
+                <% } %>
+            </select>
+            <button type="submit" class="add-button">+</button>
+        </form>
+        <% } %>
+    </div>
 </div>

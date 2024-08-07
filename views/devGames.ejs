@@ -1,19 +1,27 @@
-<h1><%= devName %>'s Games:</h1>
-<div>
-    <ul>
-    <% for (let i = 0; i < games.length; i++) { %>
-        <li><a href="/games/<%= games[i].id%>"><%= games[i].title %> (<%= games[i].release_date.getFullYear() %>)</a></li>
-    <% } %>
-    </ul>
-</div>
-<% if (nonGames.length > 0) { %>
-<h1>Add a game to <%= devName %>'s portfolio:</h1>
-<form action="/developers/<%= id %>/newGame" method="POST">
-    <select name="game_id">
-        <% for (let i = 0; i < nonGames.length; i++) { %>
-            <option value="<%= nonGames[i].id %>"><%= nonGames[i].title %> (<%= nonGames[i].release_date.getFullYear() %>)</option>
+<div class="form-view">
+    <div class="form-view-header">
+        <h1><%= devName %>'s Games</h1>
+    </div>
+    <div>
+        <ul>
+        <% for (let i = 0; i < games.length; i++) { %>
+            <li><a href="/games/<%= games[i].id%>"><%= games[i].title %> (<%= games[i].release_date.getFullYear() %>)</a></li>
         <% } %>
-    </select>
-    <button type="submit" class="add-button">+</button>
-</form>
-<% } %>
+        </ul>
+        <% if (games.length == 0) { %>
+        <h2>No games yet!</h2>
+        <% } %>
+    </div>
+    <% if (nonGames.length > 0) { %>
+    <div>
+        <form action="/developers/<%= id %>/newGame" method="POST">
+            <select name="game_id">
+                <% for (let i = 0; i < nonGames.length; i++) { %>
+                    <option value="<%= nonGames[i].id %>"><%= nonGames[i].title %> (<%= nonGames[i].release_date.getFullYear() %>)</option>
+                <% } %>
+            </select>
+            <button type="submit" class="add-button">+</button>
+        </form>
+    </div>
+    <% } %>
+</div>
