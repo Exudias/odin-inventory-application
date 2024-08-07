@@ -45,3 +45,20 @@ exports.developerDelete = asyncHandler(async (req,res) => {
 
     res.redirect("/developers/");
 });
+
+exports.developerUpdate = asyncHandler(async (req, res) => {
+    const devId = req.params.id;
+    const newName = req.body.new_name;
+
+    await db.editDev(devId, newName);
+
+    res.redirect("/developers/");
+});
+
+exports.developerUpdateGet = asyncHandler(async (req, res) => {
+    const devId = req.params.id;
+
+    const dev = await db.getDevById(devId);
+
+    res.render("devUpdate", { title: "Update a developer", id: devId, dev });
+});

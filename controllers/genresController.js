@@ -45,3 +45,20 @@ exports.genreDelete = asyncHandler(async (req,res) => {
 
     res.redirect("/genres/");
 });
+
+exports.genreUpdate = asyncHandler(async (req, res) => {
+    const genreId = req.params.id;
+    const newName = req.body.new_name;
+
+    await db.editGenre(genreId, newName);
+
+    res.redirect("/genres/");
+});
+
+exports.genreUpdateGet = asyncHandler(async (req, res) => {
+    const genreId = req.params.id;
+
+    const genre = await db.getGenreById(genreId);
+
+    res.render("genreUpdate", { title: "Update a genre", id: genreId, genre });
+});

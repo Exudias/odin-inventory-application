@@ -75,3 +75,31 @@ exports.gameUnlink = asyncHandler(async (req, res) => {
     const referer = req.get('Referer');
     res.redirect(referer || '/');
 });
+
+exports.gameUpdate = asyncHandler(async (req, res) => {
+    const gameId = req.params.id;
+    const newName = req.body.new_title;
+    const newRelease = req.body.new_release_date;
+
+    await db.editGame(gameId, newName, newRelease);
+
+    res.redirect("/games/");
+});
+
+exports.gameUpdateGet = asyncHandler(async (req, res) => {
+    const gameId = req.params.id;
+
+    const game = await db.getGameById(gameId);
+
+    game.release_date = formatDateForInput(game.release_date);
+
+    res.render("gameUpdate", { title: "Update a game", id: gameId, game });
+});
+
+function formatDateForInput(date) {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}

@@ -8,6 +8,7 @@
         <% for (let i = 0; i < developers.length; i++) { %>
             <li>
                 <a href="/developers/<%= developers[i].id %>"><%= developers[i].name %></a>
+                <a href="/developers/<%= developers[i].id %>/update"><button class="edit-button">E</button></a>
                 <form action="/developers/<%= developers[i].id %>?_method=DELETE" method="POST">
                     <button type="submit" class="close-button">X</button>
                 </form>

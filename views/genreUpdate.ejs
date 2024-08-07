@@ -1,0 +1,10 @@
+<div class="add-view">
+    <h1>Update a genre: <%= genre.name %></h1>
+    <form action="/genres/<%= id %>?_method=PUT" method="POST">
+        <label>
+            Genre name:
+            <input type="text" name="new_name" value="<%= genre.name %>" required/><br>
+        </label>
+        <button type="submit">Submit</button>
+    </form>
+</div>

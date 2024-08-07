@@ -11,5 +11,7 @@ gamesRouter.post("/:id/newDeveloper", gamesController.gameLinkDeveloperPost);
 gamesRouter.post("/:id/newGenre", gamesController.gameLinkGenrePost);
 gamesRouter.delete("/:id/unlink", gamesController.gameUnlink);
 gamesRouter.delete("/:id", gamesController.gameDelete);
+gamesRouter.put("/:id", gamesController.gameUpdate);
+gamesRouter.get("/:id/update", gamesController.gameUpdateGet);
 
 module.exports = gamesRouter;

@@ -291,6 +291,36 @@ async function unlinkGameDeveloper(gameId, devId) {
     await pool.query(query, [gameId, devId]);
 }
 
+async function editGame(gameId, newName, newRelease) {
+    const query = `
+    UPDATE games
+    SET title = $2, release_date = $3
+    WHERE id = $1;
+    `;
+
+    await pool.query(query, [gameId, newName, newRelease]);
+}
+
+async function editDev(devId, newName) {
+    const query = `
+    UPDATE developers
+    SET name = $2
+    WHERE id = $1;
+    `;
+
+    await pool.query(query, [devId, newName]);
+}
+
+async function editGenre(genreId, newName) {
+    const query = `
+    UPDATE genres
+    SET name = $2
+    WHERE id = $1;
+    `;
+
+    await pool.query(query, [genreId, newName]);
+}
+
 module.exports = {
     getAllGames,
     getAllDevelopers,
@@ -317,4 +347,7 @@ module.exports = {
     deleteGame,
     unlinkGameGenre,
     unlinkGameDeveloper,
+    editDev,
+    editGame,
+    editGenre,
 }

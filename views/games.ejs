@@ -8,6 +8,7 @@
         <% for (let i = 0; i < games.length; i++) { %>
             <li>
                 <a href="/games/<%= games[i].id %>"><%= games[i].title %> (<%= games[i].release_date.getFullYear() %>)</a>
+                <a href="/games/<%= games[i].id %>/update"><button class="edit-button">E</button></a>
                 <form action="/games/<%= games[i].id %>?_method=DELETE" method="POST">
                     <button type="submit" class="close-button">X</button>
                 </form>

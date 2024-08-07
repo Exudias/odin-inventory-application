@@ -9,5 +9,7 @@ developersRouter.post("/new", developersController.developerNewPost);
 developersRouter.get("/:id", developersController.developerAndGamesGet);
 developersRouter.post("/:id/newGame", developersController.developerLinkGamePost);
 developersRouter.delete("/:id", developersController.developerDelete);
+developersRouter.put("/:id", developersController.developerUpdate);
+developersRouter.get("/:id/update", developersController.developerUpdateGet);
 
 module.exports = developersRouter;

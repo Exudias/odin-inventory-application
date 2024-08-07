@@ -1,0 +1,14 @@
+<div class="add-view">
+    <h1>Update a game: <%= game.title %></h1>
+    <form action="/games/<%= id %>?_method=PUT" method="POST">
+        <label>
+            Game name:
+            <input type="text" name="new_title" value="<%= game.title %>" required/><br>
+        </label>
+        <label>
+            Release year:
+            <input type="date" name="new_release_date" value="<%= game.release_date %>" required/><br>
+        </label>
+        <button type="submit">Submit</button>
+    </form>
+</div>
