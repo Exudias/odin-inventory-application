@@ -1,9 +1,16 @@
 <div class="add-view">
     <h1>Create a new genre</h1>
+    <% if (locals.errors) {%>
+        <ul>
+          <% errors.forEach(function(error) { %>
+            <li><%= error.msg %></li>
+          <% }); %>
+        </ul>
+    <% } %>
     <form action="/genres/new" method="POST">
         <label>
             Genre name:
-            <input type="text" name="name"/><br>
+            <input type="text" name="name" minlength="1" maxlength="255" required/>
         </label>
         <button type="submit">Submit</button>
     </form>

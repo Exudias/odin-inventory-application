@@ -1,5 +1,18 @@
 const asyncHandler = require("express-async-handler");
 const db = require("../db/queries");
+const {body, validationResult} = require("express-validator");
+
+const lengthErr = "must be between 1 and 255 characters";
+
+const validateDeveloper = [
+    body("name").trim()
+    .isLength({min: 1, max: 255}).withMessage(`Developer name ${lengthErr}`),
+];
+
+const validateNewDeveloper = [
+    body("new_name").trim()
+    .isLength({min: 1, max: 255}).withMessage(`Developer name ${lengthErr}`),
+]
 
 exports.developersGet = asyncHandler(async (req, res) => {
     const allDevelopers = await db.getAllDevelopers();
@@ -23,11 +36,22 @@ exports.developerNewGet = asyncHandler(async (req, res) => {
     res.render("devNew", { title: "Create a developer" });
 });
 
-exports.developerNewPost = asyncHandler(async (req,res) => {
-    await db.addDeveloper(req.body.name);
+exports.developerNewPost = [
+    validateDeveloper,
+    asyncHandler(async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).render("devNew", {
+                title: "Create a developer",
+                errors: errors.array(),
+            });
+        }
 
-    res.redirect("/developers");
-});
+        await db.addDeveloper(req.body.name);
+    
+        res.redirect("/developers");
+    })
+];
 
 exports.developerLinkGamePost = asyncHandler(async (req,res) => {
     const devId = req.params.id;
@@ -46,14 +70,29 @@ exports.developerDelete = asyncHandler(async (req,res) => {
     res.redirect("/developers/");
 });
 
-exports.developerUpdate = asyncHandler(async (req, res) => {
-    const devId = req.params.id;
-    const newName = req.body.new_name;
+exports.developerUpdate = [
+    validateNewDeveloper,
+    asyncHandler(async (req, res) => {
+        const devId = req.params.id;
 
-    await db.editDev(devId, newName);
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            const dev = await db.getDevById(devId);
+            return res.status(400).render("devUpdate", {
+                title: "Update a developer",
+                errors: errors.array(),
+                id: dev.id,
+                dev
+            });
+        }
 
-    res.redirect("/developers/");
-});
+        const newName = req.body.new_name;
+    
+        await db.editDev(devId, newName);
+    
+        res.redirect("/developers/");
+    })
+];
 
 exports.developerUpdateGet = asyncHandler(async (req, res) => {
     const devId = req.params.id;

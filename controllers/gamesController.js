@@ -1,5 +1,23 @@
 const asyncHandler = require("express-async-handler");
 const db = require("../db/queries");
+const {body, validationResult} = require("express-validator");
+
+const lengthErr = "must be between 1 and 255 characters";
+const formatErr = "must have a proper format";
+
+const validateGame = [
+    body("title").trim()
+    .isLength({min: 1, max: 255}).withMessage(`Game title ${lengthErr}`),
+    body("release_date").trim()
+    .isDate().withMessage(`Release date ${formatErr}`),
+];
+
+const validateNewGame = [
+    body("new_title").trim()
+    .isLength({min: 1, max: 255}).withMessage(`Game title ${lengthErr}`),
+    body("new_release_date").trim()
+    .isDate().withMessage(`Release date ${formatErr}`),
+]
 
 exports.gamesGet = asyncHandler(async (req, res) => {
     const allGames = await db.getAllGames();
@@ -24,11 +42,22 @@ exports.gameNewGet = asyncHandler(async (req, res) => {
     res.render("gameNew", { title: "Create a game" });
 });
 
-exports.gameNewPost = asyncHandler(async (req,res) => {
-    await db.addGame(req.body.title, req.body.release_date);
+exports.gameNewPost = [
+    validateGame,
+    asyncHandler(async (req,res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).render("gameNew", {
+                title: "Create a game",
+                errors: errors.array(),
+            });
+        }
 
-    res.redirect("/games");
-});
+        await db.addGame(req.body.title, req.body.release_date);
+    
+        res.redirect("/games");
+    }),
+];
 
 exports.gameLinkDeveloperPost = asyncHandler(async (req,res) => {
     const gameId = req.params.id;
@@ -76,15 +105,30 @@ exports.gameUnlink = asyncHandler(async (req, res) => {
     res.redirect(referer || '/');
 });
 
-exports.gameUpdate = asyncHandler(async (req, res) => {
-    const gameId = req.params.id;
-    const newName = req.body.new_title;
-    const newRelease = req.body.new_release_date;
+exports.gameUpdate = [
+    validateNewGame,
+    asyncHandler(async (req, res) => {
+        const gameId = req.params.id;
 
-    await db.editGame(gameId, newName, newRelease);
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            const game = await db.getGameById(gameId);
+            return res.status(400).render("devUpdate", {
+                title: "Update a game",
+                errors: errors.array(),
+                id: game.id,
+                game
+            });
+        }
 
-    res.redirect("/games/");
-});
+        const newName = req.body.new_title;
+        const newRelease = req.body.new_release_date;
+    
+        await db.editGame(gameId, newName, newRelease);
+    
+        res.redirect("/games/");
+    })
+];
 
 exports.gameUpdateGet = asyncHandler(async (req, res) => {
     const gameId = req.params.id;

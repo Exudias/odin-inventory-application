@@ -1,5 +1,12 @@
 <div class="add-view">
     <h1>Update a genre: <%= genre.name %></h1>
+    <% if (locals.errors) {%>
+        <ul>
+          <% errors.forEach(function(error) { %>
+            <li><%= error.msg %></li>
+          <% }); %>
+        </ul>
+    <% } %>
     <form action="/genres/<%= id %>?_method=PUT" method="POST">
         <label>
             Genre name:
