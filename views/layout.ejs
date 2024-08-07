@@ -8,6 +8,24 @@
     <% if (cssFile) { %>
         <link rel="stylesheet" href="<%= cssFile %>">
     <% } %>
+    <script>
+        window.addEventListener('load', function() {
+            const firstFormElement = document.querySelector('form input, form select, form textarea, form button');
+
+            if (firstFormElement) {
+                firstFormElement.focus();
+                if (firstFormElement.tagName === 'INPUT' || firstFormElement.tagName === 'TEXTAREA') 
+                {
+                    const length = firstFormElement.value.length;
+                    firstFormElement.setSelectionRange(length, length); // Move cursor to the end
+                } 
+                else if (firstFormElement.tagName === 'SELECT') 
+                {
+                    firstFormElement.selectedIndex = 0; // Select the first option
+                }
+            }
+        });
+    </script>
 </head>
 <body>
     <nav>
